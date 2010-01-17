@@ -46,12 +46,14 @@ static char *html_entities (char const *raw_text) {
 		/* Count the number of characters needed for the output string */
 		out_length = 0;
 		for (i = 0; i < raw_length; i++) {
-			if ((raw_text[i] > 0 && raw_text[i] < 32) || (raw_text[i] >= 127)) {
+			unsigned char ch = (unsigned char)raw_text[i];
+
+			if ((ch > 0 && ch < 32) || (ch >= 127)) {
 				char entity[11]; // Max size 6 char + 3 digits + 1 char + \0 = 11
-				sprintf(entity, "&amp;#%d;", int(raw_text[i]));
+				sprintf(entity, "&amp;#%d;", int(ch));
 				out_length += strlen(entity);
 			} else {
-				switch (raw_text[i]) {
+				switch (ch) {
 					case '<':
 					case '>':
 						out_length += 4;
@@ -72,12 +74,14 @@ static char *html_entities (char const *raw_text) {
 		out_text = (char *)malloc((out_length + 1) * sizeof(char));
 		out_text[0] = '\0';
 		for (i = 0; i < raw_length; i++) {
-			if ((raw_text[i] > 0 && raw_text[i] < 32) || (raw_text[i] >= 127)) {
+			unsigned char ch = (unsigned char)raw_text[i];
+
+			if ((ch > 0 && ch < 32) || (ch >= 127)) {
 				char entity[11]; // Max size 6 char + 3 digits + 1 char + \0 = 11
-				sprintf(entity, "&amp;#%d;", int(raw_text[i]));
+				sprintf(entity, "&amp;#%d;", int(ch));
 				strcat(out_text, entity);
 			} else {
-				switch (raw_text[i]) {
+				switch (ch) {
 					case '<':
 						   strcat(out_text, "&lt;");
 						   break;
@@ -91,7 +95,7 @@ static char *html_entities (char const *raw_text) {
 						   strcat (out_text, "&quot;");
 						   break;
 					default:
-						   new_char[0] = raw_text[i];
+						   new_char[0] = ch;
 						   new_char[1] = '\0';
 						   strcat (out_text, new_char);
 						   break;
@@ -272,7 +276,7 @@ int main(int argc, char *argv[]) {
 
 	// Start File
 	fs << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" << std::endl;
-	fs << "<!DOCTYPE addressbook SYSTEM \"http://www.geekshed.net/xml/anope.dtd\">" << std::endl;
+	fs << "<!DOCTYPE anope SYSTEM \"http://www.geekshed.net/xml/anope.dtd\">" << std::endl;
 	// VERSHUN ONE
 	fs << "<anope version=\"1\">" << std::endl;
 
@@ -473,15 +477,15 @@ int main(int argc, char *argv[]) {
 			if (nc->url)
 				fs << "\t\t\t<url>" << html_entities(nc->url) << "</url>" << std::endl;
 
-			fs << "\t\t\t<accesslist>" << std::endl;
-
 			if (nc->accesscount) {
+				fs << "\t\t\t<accesslist>" << std::endl;
+
 				for (j = 0, access = nc->access; j < nc->accesscount; j++, access++)
 					if (access)
 						fs << "\t\t\t\t<access>" << html_entities(*access) << "</access>" << std::endl;
-			}
 
-			fs << "\t\t\t</accesslist>" << std::endl;
+				fs << "\t\t\t</accesslist>" << std::endl;
+			}
 
 			if (nc->flags != 0) {
 				fs << "\t\t\t<flags>"
@@ -555,7 +559,7 @@ int main(int argc, char *argv[]) {
 						fs << "\t\t\t\t\t<lastrealname>" << html_entities(na->last_realname) <<  "</lastrealname>" << std::endl;
 					if (na->last_quit)
 						fs << "\t\t\t\t\t<lastquit>" << html_entities(na->last_quit) << "</lastquit>" << std::endl;
-					if (na->status != 0) {
+					if (na->status & NS_FORBIDDEN || na->status & NS_NO_EXPIRE) {
 						fs << "\t\t\t\t\t<flags>" << std::endl;
 						if (na->status & NS_FORBIDDEN)
 							fs << "\t\t\t\t\t\t<flag>FORBIDDEN</flag>" << std::endl;
@@ -566,13 +570,13 @@ int main(int argc, char *argv[]) {
 
 					HostCore *hc = findHostCore(na->nick);
 					if (hc) {
-						fs << "\t\t\t\t\t<vhost>" << std::endl;
+						fs << "\t\t\t\t\t<virtualhost>" << std::endl;
 						fs << "\t\t\t\t\t\t<creator>" << html_entities(hc->creator) << "</creator>" << std::endl;
 						fs << "\t\t\t\t\t\t<time>" << hc->time << "</time>" << std::endl;
 						fs << "\t\t\t\t\t\t<vhost>" << html_entities(hc->vHost) << "</vhost>" << std::endl;
 						if (hc->vIdent)
 							fs << "\t\t\t\t\t\t<vident>" << html_entities(hc->vIdent) << "</vident>" << std::endl;
-						fs << "\t\t\t\t\t</vhost>" << std::endl;
+						fs << "\t\t\t\t\t</virtualhost>" << std::endl;
 					}
 					fs << "\t\t\t\t</alias>" << std::endl;
 				}
@@ -644,14 +648,14 @@ int main(int argc, char *argv[]) {
 
 			if (flags != 0) {
 				fs << "\t\t\t<flags>" << std::endl;
-				fs << (( flags & BI_PRIVATE  ) ? "/n\t\t\t\t<flag>PRIVATE</flag>"  : "" )
-				   << (( flags & BI_CHANSERV ) ? "/n\t\t\t\t<flag>CHANSERV</flag>" : "" )
-				   << (( flags & BI_BOTSERV  ) ? "/n\t\t\t\t<flag>BOTSERV</flag>"  : "" )
-				   << (( flags & BI_HOSTSERV ) ? "/n\t\t\t\t<flag>HOSTSERV</flag>" : "" )
-				   << (( flags & BI_OPERSERV ) ? "/n\t\t\t\t<flag>OPERSERV</flag>" : "" )
-				   << (( flags & BI_MEMOSERV ) ? "/n\t\t\t\t<flag>MEMOSERV</flag>" : "" )
-				   << (( flags & BI_NICKSERV ) ? "/n\t\t\t\t<flag>NICKSERV</flag>" : "" )
-				   << (( flags & BI_GLOBAL   ) ? "/n\t\t\t\t<flag>GLOBAL</flag>"   : "" ) << std::endl;
+				fs << (( flags & BI_PRIVATE  ) ? "\n\t\t\t\t<flag>PRIVATE</flag>"  : "" )
+				   << (( flags & BI_CHANSERV ) ? "\n\t\t\t\t<flag>CHANSERV</flag>" : "" )
+				   << (( flags & BI_BOTSERV  ) ? "\n\t\t\t\t<flag>BOTSERV</flag>"  : "" )
+				   << (( flags & BI_HOSTSERV ) ? "\n\t\t\t\t<flag>HOSTSERV</flag>" : "" )
+				   << (( flags & BI_OPERSERV ) ? "\n\t\t\t\t<flag>OPERSERV</flag>" : "" )
+				   << (( flags & BI_MEMOSERV ) ? "\n\t\t\t\t<flag>MEMOSERV</flag>" : "" )
+				   << (( flags & BI_NICKSERV ) ? "\n\t\t\t\t<flag>NICKSERV</flag>" : "" )
+				   << (( flags & BI_GLOBAL   ) ? "\n\t\t\t\t<flag>GLOBAL</flag>"   : "" ) << std::endl;
 				fs << "\t\t\t</flags>" << std::endl;
 			}
 			fs << "\t\t</bot>" << std::endl;
@@ -868,7 +872,7 @@ int main(int argc, char *argv[]) {
 				fs << "\t\t\t<successor>" << html_entities(ci->successor) << "</successor>" << std::endl;
 			fs << "\t\t\t<levels>" << std::endl;
 			for (j = 0; j < 36; j++) {
-				fs << "\t\t\t\t<level name=\"" << GetLevelName(j) << "\">" << ci->levels[j] << "</level>" << std::endl;
+				fs << "\t\t\t\t<accesslevel name=\"" << GetLevelName(j) << "\">" << ci->levels[j] << "</accesslevel>" << std::endl;
 			}
 			fs << "\t\t\t</levels>" << std::endl;
 
@@ -913,18 +917,18 @@ int main(int argc, char *argv[]) {
 				fs << "\t\t\t</forbidden>" << std::endl;
 			}
 
-			fs << "\t\t\t<accesslist>" << std::endl;
+			fs << "\t\t\t<chanaccesslist>" << std::endl;
 			for (j = 0; j < ci->accesscount; j++) {
 				// MD ACCESS <display> <level> <last_seen> <creator> - creator isn't in 1.9.0-1, but is in 1.9.2
 				if (ci->access[j].in_use) {
-					fs << "\t\t\t\t<access>" << std::endl;
+					fs << "\t\t\t\t<chanaccess>" << std::endl;
 					fs << "\t\t\t\t\t<display>" << html_entities(ci->access[j].nc->display) << "</display>" << std::endl;
 					fs << "\t\t\t\t\t<level>" << ci->access[j].level << "</level>" << std::endl;
 					fs << "\t\t\t\t\t<seen>" << ci->access[j].last_seen << "</seen>" << std::endl;
-					fs << "\t\t\t\t</access>" << std::endl;
+					fs << "\t\t\t\t</chanaccess>" << std::endl;
 				}
 			}
-			fs << "\t\t\t</accesslist>" << std::endl;
+			fs << "\t\t\t</chanaccesslist>" << std::endl;
 
 			fs << "\t\t\t<akicklist>" << std::endl;
 			for (j = 0; j < ci->akickcount; j++) {
@@ -1166,3 +1170,4 @@ int main(int argc, char *argv[]) {
 	fs.close();
 	return 0;
 } /* End of main() */
+
