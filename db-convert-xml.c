@@ -49,12 +49,12 @@ static char *html_entities (char const *raw_text)
 	  out_length = 0;
 	  for (i = 0; i < raw_length; i++)
 	  {
-               if (raw_text[i] < 32) {
-                    out_length += 11;
-               }
+	       if (raw_text[i] < 32) {
+		    out_length += 11;
+	       }
 	       else {
 		       switch (raw_text[i]) {
-		   	       case '<':
+			       case '<':
 			       case '>':
 				    out_length += 4;
 				    break;
@@ -67,21 +67,21 @@ static char *html_entities (char const *raw_text)
 			       default:
 				    out_length += 1;
 		       }
-               }
+	       }
 	  }
 
 	  /* Convert some tags into their HTML entities */
 	  out_text = (char *) malloc ((out_length + 1) * sizeof(char));
- 	  out_text[0] = '\0';
+	  out_text[0] = '\0';
 	  for (i = 0; i < raw_length; i++)
 	  {
-               if (raw_text[i] < 32) {
-                    int c = int(raw_text[i]);
-                    char entity[11];
-                    sprintf(entity, "&amp;#%d;", c);
-                    strcat(out_text, entity);
-               }
-               else {
+	       if (raw_text[i] < 32) {
+		    int c = int(raw_text[i]);
+		    char entity[11];
+		    sprintf(entity, "&amp;#%d;", c);
+		    strcat(out_text, entity);
+	       }
+	       else {
 		       switch (raw_text[i]) {
 			       case '<':
 				    strcat(out_text, "&lt;");
@@ -101,7 +101,7 @@ static char *html_entities (char const *raw_text)
 				    strcat (out_text, new_char);
 				    break;
 		       }
-               }
+	       }
 	  }
      }
 
@@ -191,59 +191,59 @@ static std::string GetLevelName(int level)
 
 void process_mlock_modes(std::ofstream &fs, size_t m, const std::string &ircd)
 {
-        /* this is the same in all protocol modules */
-                if (m &        0x1) fs << "\n\t\t\t\t<mode>INVITE</mode>";        // CMODE_i
-                if (m &        0x2) fs << "\n\t\t\t\t<mode>MODERATED</mode>";     // CMODE_m
-                if (m &        0x4) fs << "\n\t\t\t\t<mode>NOEXTERNAL</mode>";    // CMODE_n
-                if (m &        0x8) fs << "\n\t\t\t\t<mode>PRIVATE</mode>";       // CMODE_p
-                if (m &       0x10) fs << "\n\t\t\t\t<mode>SECRET</mode>";        // CMODE_s
-                if (m &       0x20) fs << "\n\t\t\t\t<mode>TOPIC</mode>";         // CMODE_t
-                if (m &       0x40) fs << "\n\t\t\t\t<mode>KEY</mode>";           // CMODE_k
-                if (m &       0x80) fs << "\n\t\t\t\t<mode>LIMIT</mode>";         // CMODE_l
-                if (m &      0x200) fs << "\n\t\t\t\t<mode>REGISTERED</mode>";    // CMODE_r
+	/* this is the same in all protocol modules */
+		if (m &        0x1) fs << "\n\t\t\t\t<mode>INVITE</mode>";        // CMODE_i
+		if (m &        0x2) fs << "\n\t\t\t\t<mode>MODERATED</mode>";     // CMODE_m
+		if (m &        0x4) fs << "\n\t\t\t\t<mode>NOEXTERNAL</mode>";    // CMODE_n
+		if (m &        0x8) fs << "\n\t\t\t\t<mode>PRIVATE</mode>";       // CMODE_p
+		if (m &       0x10) fs << "\n\t\t\t\t<mode>SECRET</mode>";        // CMODE_s
+		if (m &       0x20) fs << "\n\t\t\t\t<mode>TOPIC</mode>";         // CMODE_t
+		if (m &       0x40) fs << "\n\t\t\t\t<mode>KEY</mode>";           // CMODE_k
+		if (m &       0x80) fs << "\n\t\t\t\t<mode>LIMIT</mode>";         // CMODE_l
+		if (m &      0x200) fs << "\n\t\t\t\t<mode>REGISTERED</mode>";    // CMODE_r
 
-        if (ircd == "unreal" || ircd == "inspircd")
-        {
-                if (m &      0x100) fs << "\n\t\t\t\t<mode>REGISTEREDONLY</mode>"; // CMODE_R
-                if (m &      0x400) fs << "\n\t\t\t\t<mode>BLOCKCOLOR</mode>";     // CMODE_c
-                if (m &     0x2000) fs << "\n\t\t\t\t<mode>NOKNOCK</mode>";        // CMODE_K
-                if (m &     0x4000) fs << "\n\t\t\t\t<mode>REDIRECT</mode>";       // CMODE_L
-                if (m &     0x8000) fs << "\n\t\t\t\t<mode>OPERONLY</mode>";       // CMODE_O
-                if (m &    0x10000) fs << "\n\t\t\t\t<mode>NOKICK</mode>";         // CMODE_Q
-                if (m &    0x20000) fs << "\n\t\t\t\t<mode>STRIPCOLOR</mode>";     // CMODE_S
-                if (m &    0x80000) fs << "\n\t\t\t\t<mode>FLOOD</mode>";          // CMODE_f
-                if (m &   0x100000) fs << "\n\t\t\t\t<mode>FILTER</mode>";         // CMODE_G
-                if (m &   0x200000) fs << "\n\t\t\t\t<mode>NOCTCP</mode>";         // CMODE_C
-                if (m &   0x400000) fs << "\n\t\t\t\t<mode>AUDITORIUM</mode>";     // CMODE_u
-                if (m &   0x800000) fs << "\n\t\t\t\t<mode>SSL</mode>";            // CMODE_z
-                if (m &  0x1000000) fs << "\n\t\t\t\t<mode>NONICK</mode>";         // CMODE_N
-                if (m &  0x4000000) fs << "\n\t\t\t\t<mode>REGMODERATED</mode>";   // CMODE_M
-        }
+	if (ircd == "unreal" || ircd == "inspircd")
+	{
+		if (m &      0x100) fs << "\n\t\t\t\t<mode>REGISTEREDONLY</mode>"; // CMODE_R
+		if (m &      0x400) fs << "\n\t\t\t\t<mode>BLOCKCOLOR</mode>";     // CMODE_c
+		if (m &     0x2000) fs << "\n\t\t\t\t<mode>NOKNOCK</mode>";        // CMODE_K
+		if (m &     0x4000) fs << "\n\t\t\t\t<mode>REDIRECT</mode>";       // CMODE_L
+		if (m &     0x8000) fs << "\n\t\t\t\t<mode>OPERONLY</mode>";       // CMODE_O
+		if (m &    0x10000) fs << "\n\t\t\t\t<mode>NOKICK</mode>";         // CMODE_Q
+		if (m &    0x20000) fs << "\n\t\t\t\t<mode>STRIPCOLOR</mode>";     // CMODE_S
+		if (m &    0x80000) fs << "\n\t\t\t\t<mode>FLOOD</mode>";          // CMODE_f
+		if (m &   0x100000) fs << "\n\t\t\t\t<mode>FILTER</mode>";         // CMODE_G
+		if (m &   0x200000) fs << "\n\t\t\t\t<mode>NOCTCP</mode>";         // CMODE_C
+		if (m &   0x400000) fs << "\n\t\t\t\t<mode>AUDITORIUM</mode>";     // CMODE_u
+		if (m &   0x800000) fs << "\n\t\t\t\t<mode>SSL</mode>";            // CMODE_z
+		if (m &  0x1000000) fs << "\n\t\t\t\t<mode>NONICK</mode>";         // CMODE_N
+		if (m &  0x4000000) fs << "\n\t\t\t\t<mode>REGMODERATED</mode>";   // CMODE_M
+	}
 
-        if (ircd == "unreal")
-        {
-                if (m &      0x800) fs << "\n\t\t\t\t<mode>ADMINONLY</mode>";       // CMODE_A
-                if (m &     0x1000) fs << "";                 // old CMODE_H (removed in 3.2)
-                if (m &    0x40000) fs << "\n\t\t\t\t<mode>NOINVITE</mode>";        // CMODE_f
-                if (m &  0x2000000) fs << "\n\t\t\t\t<mode>NONOTICE</mode>";        // CMODE_T
-                if (m &  0x8000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";       // CMODE_j
-        } // if (unreal)
-        if (ircd == "inspircd" )
-        {
-                if (m &      0x800) fs << "\n\t\t\t\t<mode>ALLINVITE</mode>";        // CMODE_A
-                if (m &     0x1000) fs << "\n\t\t\t\t<mode>NONOTICE</mode>";         // CMODE_T
-                /* for some reason, there is no CMODE_P in 1.8.x and no CMODE_V in the 1.9.1 protocol module
-                   we are ignoring this flag until we find a solution for this problem,
-                   so the +V/+P mlock mode is lost on convert
-                   anope 1.8: if (m &    0x40000) fs << "\n\t\t\t\t<mode>NOINVITE</mode>";         // CMODE_V
-                   anope 1.9: if (m &    0x40000) fs << "\n\t\t\t\t<mode>PERM</mode>";             // CMODE_P
-                */
-                if (m &  0x2000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";        // CMODE_j
-                if (m &  0x8000000) fs << "\n\t\t\t\t<mode>BLOCKCAPS</mode>";        // CMODE_B
-                if (m & 0x10000000) fs << "\n\t\t\t\t<mode>NICKFLOOD</mode>";        // CMODE_F
-                if (m & 0x20000000) fs << "";                  // CMODE_g (mode +g <badword>) ... can't be mlocked in older version
-                if (m & 0x40000000) fs << "";                  // CMODE_J (mode +J [seconds] ... can't be mlocked in older versions
-        } // if (inspircd)
+	if (ircd == "unreal")
+	{
+		if (m &      0x800) fs << "\n\t\t\t\t<mode>ADMINONLY</mode>";       // CMODE_A
+		if (m &     0x1000) fs << "";                 // old CMODE_H (removed in 3.2)
+		if (m &    0x40000) fs << "\n\t\t\t\t<mode>NOINVITE</mode>";        // CMODE_f
+		if (m &  0x2000000) fs << "\n\t\t\t\t<mode>NONOTICE</mode>";        // CMODE_T
+		if (m &  0x8000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";       // CMODE_j
+	} // if (unreal)
+	if (ircd == "inspircd" )
+	{
+		if (m &      0x800) fs << "\n\t\t\t\t<mode>ALLINVITE</mode>";        // CMODE_A
+		if (m &     0x1000) fs << "\n\t\t\t\t<mode>NONOTICE</mode>";         // CMODE_T
+		/* for some reason, there is no CMODE_P in 1.8.x and no CMODE_V in the 1.9.1 protocol module
+		   we are ignoring this flag until we find a solution for this problem,
+		   so the +V/+P mlock mode is lost on convert
+		   anope 1.8: if (m &    0x40000) fs << "\n\t\t\t\t<mode>NOINVITE</mode>";         // CMODE_V
+		   anope 1.9: if (m &    0x40000) fs << "\n\t\t\t\t<mode>PERM</mode>";             // CMODE_P
+		*/
+		if (m &  0x2000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";        // CMODE_j
+		if (m &  0x8000000) fs << "\n\t\t\t\t<mode>BLOCKCAPS</mode>";        // CMODE_B
+		if (m & 0x10000000) fs << "\n\t\t\t\t<mode>NICKFLOOD</mode>";        // CMODE_F
+		if (m & 0x20000000) fs << "";                  // CMODE_g (mode +g <badword>) ... can't be mlocked in older version
+		if (m & 0x40000000) fs << "";                  // CMODE_J (mode +J [seconds] ... can't be mlocked in older versions
+	} // if (inspircd)
 }
 
 int main(int argc, char *argv[])
@@ -1038,21 +1038,21 @@ int main(int argc, char *argv[])
 				fs << "\t\t\t<memos>" << std::endl;
 				for (j = 0; j < ci->memos.memocount; j++, memos++)
 				{
-                                        fs << "\t\t\t\t<memo number=\">" << memos->number << "\">" << std::endl;
-                                        fs << "\t\t\t\t\t<time>" << memos->time << "</time>" << std::endl;
-                                        fs << "\t\t\t\t\t<sender>" << html_entities(memos->sender) << "</sender>" << std::endl;
-                                        if (memos->flags != 0) {
-                                                fs << "\t\t\t\t\t<flags>" << std::endl;
-                                                if (memos->flags & MF_UNREAD)
-                                                        fs << "\t\t\t\t\t\t<flag>UNREAD</flag>" << std::endl;
-                                                if (memos->flags & MF_RECEIPT)
-                                                        fs << "\t\t\t\t\t\t<flag>RECEIPT</flag>" << std::endl;
-                                                if (memos->flags & MF_NOTIFYS)
-                                                        fs << "\t\t\t\t\t\t<flag>NOTIFYS</flag>" << std::endl;
-                                                fs << "\t\t\t\t\t</flags>" << std::endl;
-                                        }
-                                        fs << "\t\t\t\t\t<body>" << html_entities(memos->text) << "</body>" << std::endl;
-                                        fs << "\t\t\t\t</memo>" << std::endl;
+					fs << "\t\t\t\t<memo number=\">" << memos->number << "\">" << std::endl;
+					fs << "\t\t\t\t\t<time>" << memos->time << "</time>" << std::endl;
+					fs << "\t\t\t\t\t<sender>" << html_entities(memos->sender) << "</sender>" << std::endl;
+					if (memos->flags != 0) {
+						fs << "\t\t\t\t\t<flags>" << std::endl;
+						if (memos->flags & MF_UNREAD)
+							fs << "\t\t\t\t\t\t<flag>UNREAD</flag>" << std::endl;
+						if (memos->flags & MF_RECEIPT)
+							fs << "\t\t\t\t\t\t<flag>RECEIPT</flag>" << std::endl;
+						if (memos->flags & MF_NOTIFYS)
+							fs << "\t\t\t\t\t\t<flag>NOTIFYS</flag>" << std::endl;
+						fs << "\t\t\t\t\t</flags>" << std::endl;
+					}
+					fs << "\t\t\t\t\t<body>" << html_entities(memos->text) << "</body>" << std::endl;
+					fs << "\t\t\t\t</memo>" << std::endl;
 				}
 				fs << "\t\t\t</memos>" << std::endl;
 			}
@@ -1173,13 +1173,13 @@ int main(int argc, char *argv[])
 			SAFE(read_string(&reason, f));
 			SAFE(read_int32(&seton, f));
 			SAFE(read_int32(&expires, f));
-                        fs << "\t\t<sgline>" << std::endl;
-                        fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
-                        fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
-                        fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
-                        fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
-                        fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
-                        fs << "\t\t</sgline>" << std::endl;
+			fs << "\t\t<sgline>" << std::endl;
+			fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
+			fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
+			fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
+			fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
+			fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
+			fs << "\t\t</sgline>" << std::endl;
 			free(mask); free(by); free(reason);
 		}
 		fs << "\t</sglines>" << std::endl;
@@ -1193,13 +1193,13 @@ int main(int argc, char *argv[])
 			SAFE(read_string(&reason, f));
 			SAFE(read_int32(&seton, f));
 			SAFE(read_int32(&expires, f));
-                        fs << "\t\t<sqline>" << std::endl;
-                        fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
-                        fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
-                        fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
-                        fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
-                        fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
-                        fs << "\t\t</sqline>" << std::endl;
+			fs << "\t\t<sqline>" << std::endl;
+			fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
+			fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
+			fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
+			fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
+			fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
+			fs << "\t\t</sqline>" << std::endl;
 			free(mask); free(by); free(reason);
 		}
 		fs << "\t</sqlines>" << std::endl;
@@ -1213,13 +1213,13 @@ int main(int argc, char *argv[])
 			SAFE(read_string(&reason, f));
 			SAFE(read_int32(&seton, f));
 			SAFE(read_int32(&expires, f));
-                        fs << "\t\t<szline>" << std::endl;
-                        fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
-                        fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
-                        fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
-                        fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
-                        fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
-                        fs << "\t\t</szline>" << std::endl;
+			fs << "\t\t<szline>" << std::endl;
+			fs << "\t\t\t<mask>" << html_entities(mask) << "</mask>" << std::endl;
+			fs << "\t\t\t<by>" << html_entities(by) << "</by>" << std::endl;
+			fs << "\t\t\t<seton>" << seton << "</seton>" << std::endl;
+			fs << "\t\t\t<expires>" << expires << "</expires>" << std::endl;
+			fs << "\t\t\t<reason>" << html_entities(reason) << "</reason>" << std::endl;
+			fs << "\t\t</szline>" << std::endl;
 			free(mask); free(by); free(reason);
 		}
 		fs << "\t</szlines>" << std::endl;
