@@ -50,8 +50,10 @@ static char *html_entities (char const *raw_text)
 	  out_length = 0;
 	  for (i = 0; i < raw_length; i++)
 	  {
-	       if (raw_text[i] > 0 && raw_text[i] < 32) {
-		    out_length += 9;
+	       if ((raw_text[i] > 0 && raw_text[i] < 32) || (raw_text[i] >= 127)) {
+                    char entity[11]; // Max size 6 char + 3 digits + 1 char + \0 = 11
+		    sprintf(entity, "&amp;#%d;", int(raw_text[i]));
+		    out_length += strlen(entity);
 	       }
 	       else {
 		       switch (raw_text[i]) {
@@ -76,8 +78,8 @@ static char *html_entities (char const *raw_text)
 	  out_text[0] = '\0';
 	  for (i = 0; i < raw_length; i++)
 	  {
-	       if (raw_text[i] > 0 && raw_text[i] < 32) {
-		    char entity[10];
+	       if ((raw_text[i] > 0 && raw_text[i] < 32) || (raw_text[i] >= 127)) {
+		    char entity[11]; // Max size 6 char + 3 digits + 1 char + \0 = 11
 		    sprintf(entity, "&amp;#%d;", int(raw_text[i]));
 		    strcat(out_text, entity);
 	       }
