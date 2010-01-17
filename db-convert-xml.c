@@ -52,18 +52,18 @@ static char *html_entities (char const *raw_text) {
 				out_length += strlen(entity);
 			} else {
 				switch (raw_text[i]) {
-				case '<':
-				case '>':
-					out_length += 4;
-					break;
-				case '&':
-					out_length += 5;
-					break;
-				case '"':
-					out_length += 6;
-					break;
-				default:
-					out_length += 1;
+					case '<':
+					case '>':
+						out_length += 4;
+						break;
+					case '&':
+						out_length += 5;
+						break;
+					case '"':
+						out_length += 6;
+						break;
+					default:
+						out_length += 1;
 				}
 			}
 		}
@@ -78,23 +78,23 @@ static char *html_entities (char const *raw_text) {
 				strcat(out_text, entity);
 			} else {
 				switch (raw_text[i]) {
-                                   case '<':
-                                           strcat(out_text, "&lt;");
-                                           break;
-                                   case '>':
-                                           strcat(out_text, "&gt;");
-                                           break;
-                                   case '&':
-                                           strcat(out_text, "&amp;");
-                                           break;
-                                   case '"':
-                                           strcat (out_text, "&quot;");
-                                           break;
-                                   default:
-                                           new_char[0] = raw_text[i];
-                                           new_char[1] = '\0';
-                                           strcat (out_text, new_char);
-                                           break;
+					case '<':
+						   strcat(out_text, "&lt;");
+						   break;
+					case '>':
+						   strcat(out_text, "&gt;");
+						   break;
+					case '&':
+						   strcat(out_text, "&amp;");
+						   break;
+					case '"':
+						   strcat (out_text, "&quot;");
+						   break;
+					default:
+						   new_char[0] = raw_text[i];
+						   new_char[1] = '\0';
+						   strcat (out_text, new_char);
+						   break;
 				}
 			}
 		}
@@ -105,80 +105,80 @@ static char *html_entities (char const *raw_text) {
 
 static std::string GetLevelName(int level) {
 	switch (level) {
-          case 0:
-                  return "INVITE";
-          case 1:
-                  return "AKICK";
-          case 2:
-                  return "SET";
-          case 3:
-                  return "UNBAN";
-          case 4:
-                  return "AUTOOP";
-          case 5:
-                  return "AUTODEOP";
-          case 6:
-                  return "AUTOVOICE";
-          case 7:
-                  return "OPDEOP";
-          case 8:
-                  return "LIST";
-          case 9:
-                  return "CLEAR";
-          case 10:
-                  return "NOJOIN";
-          case 11:
-                  return "CHANGE";
-          case 12:
-                  return "MEMO";
-          case 13:
-                  return "ASSIGN";
-          case 14:
-                  return "BADWORDS";
-          case 15:
-                  return "NOKICK";
-          case 16:
-                  return "FANTASIA";
-          case 17:
-                  return "SAY";
-          case 18:
-                  return "GREET";
-          case 19:
-                  return "VOICEME";
-          case 20:
-                  return "VOICE";
-          case 21:
-                  return "GETKEY";
-          case 22:
-                  return "AUTOHALFOP";
-          case 23:
-                  return "AUTOPROTECT";
-          case 24:
-                  return "OPDEOPME";
-          case 25:
-                  return "HALFOPME";
-          case 26:
-                  return "HALFOP";
-          case 27:
-                  return "PROTECTME";
-          case 28:
-                  return "PROTECT";
-          case 29:
-                  return "KICKME";
-          case 30:
-                  return "KICK";
-          case 31:
-                  return "SIGNKICK";
-          case 32:
-                  return "BANME";
-          case 33:
-                  return "BAN";
-          case 34:
-                  return "TOPIC";
-          case 35:
-                  return "INFO";
-          default:
-                  return "INVALID";
+		case 0:
+			  return "INVITE";
+		case 1:
+			  return "AKICK";
+		case 2:
+			  return "SET";
+		case 3:
+			  return "UNBAN";
+		case 4:
+			  return "AUTOOP";
+		case 5:
+			  return "AUTODEOP";
+		case 6:
+			  return "AUTOVOICE";
+		case 7:
+			  return "OPDEOP";
+		case 8:
+			  return "LIST";
+		case 9:
+			  return "CLEAR";
+		case 10:
+			  return "NOJOIN";
+		case 11:
+			  return "CHANGE";
+		case 12:
+			  return "MEMO";
+		case 13:
+			  return "ASSIGN";
+		case 14:
+			  return "BADWORDS";
+		case 15:
+			  return "NOKICK";
+		case 16:
+			  return "FANTASIA";
+		case 17:
+			  return "SAY";
+		case 18:
+			  return "GREET";
+		case 19:
+			  return "VOICEME";
+		case 20:
+			  return "VOICE";
+		case 21:
+			  return "GETKEY";
+		case 22:
+			  return "AUTOHALFOP";
+		case 23:
+			  return "AUTOPROTECT";
+		case 24:
+			  return "OPDEOPME";
+		case 25:
+			  return "HALFOPME";
+		case 26:
+			  return "HALFOP";
+		case 27:
+			  return "PROTECTME";
+		case 28:
+			  return "PROTECT";
+		case 29:
+			  return "KICKME";
+		case 30:
+			  return "KICK";
+		case 31:
+			  return "SIGNKICK";
+		case 32:
+			  return "BANME";
+		case 33:
+			  return "BAN";
+		case 34:
+			  return "TOPIC";
+		case 35:
+			  return "INFO";
+		default:
+			  return "INVALID";
 	}
 }
 
@@ -254,7 +254,7 @@ int main(int argc, char *argv[]) {
 	        && ircd != "ultimate2" && ircd != "ultimate3" && ircd != "unreal" && ircd != "viagra") {
 		if (!ircd.empty())
 			std::cout << "Select a valid option!" << std::endl;
-		
+
                 std::cout << "Which IRCd did you use? (required for converting the mlock modes)" << std::endl;
 		std::cout << "(bahamut, charybdis, dreamforge, hybrid, inspircd, plexus2, plexus3, ptlink," << std::endl;
 		std::cout << "rageircd, ratbox, shadowircd, solidircd, ultimate2, ultimate3, unreal, viagra)" << std::endl;
@@ -456,7 +456,7 @@ int main(int argc, char *argv[]) {
 				len = 16;
 			else
 				len = 32;
-                                
+
 			b64_encode(nc->pass, len, (char *)cpass, 5000);
 
 			fs << "\t\t<nickcore>" << std::endl;
@@ -504,7 +504,7 @@ int main(int argc, char *argv[]) {
 				   << ((nc->flags & NI_FORBIDDEN    ) ? "\n\t\t\t\t<flag>FORBIDDEN</flag>"    : "") << std::endl;
 				fs << "\t\t\t</flags>" << std::endl;
 			}
-                        
+
 			if (nc->memos.memocount) {
 				fs << "\t\t\t<memos>" << std::endl;
 				memos = nc->memos.memos;
@@ -632,7 +632,7 @@ int main(int argc, char *argv[]) {
 				if (!stricmp(nick, "Global"))
 					flags |= BI_GLOBAL;
 			} /* end of 1.9.0 broken database fix */
-                            
+
 			std::cout << "Writing Bot " << nick << "!" << user << "@" << host << std::endl;
 			fs << "\t\t<bot>" << std::endl;
 			fs << "\t\t\t<nick>" << html_entities(nick) << "</nick>" << std::endl;
