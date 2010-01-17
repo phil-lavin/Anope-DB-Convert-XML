@@ -24,7 +24,8 @@
 // Copyright remains with the original author
 // Modifications copyright Phil Lavin (2010)
 /* This function converts the characters < > & and quotation marks
- * into their html entities, which are &lt; &gt; &amp; and &quot; */
+ * into their html entities, which are &lt; &gt; &amp; and &quot; 
+ * also converts chars < ASCII 32 (space) to their &#xx; equivalent */
 static char *html_entities (char const *raw_text)
 {
      int raw_length;
@@ -33,9 +34,9 @@ static char *html_entities (char const *raw_text)
      char new_char[2];
      int i;
 
-     assert (raw_text != (char *)NULL );
+     assert(raw_text != (char *)NULL);
 
-     raw_length = strlen (raw_text);
+     raw_length = strlen(raw_text);
 
      if (raw_length == 0)
      {
@@ -49,8 +50,8 @@ static char *html_entities (char const *raw_text)
 	  out_length = 0;
 	  for (i = 0; i < raw_length; i++)
 	  {
-	       if (raw_text[i] < 32) {
-		    out_length += 11;
+	       if (raw_text[i] > 0 && raw_text[i] < 32) {
+		    out_length += 9;
 	       }
 	       else {
 		       switch (raw_text[i]) {
@@ -71,14 +72,13 @@ static char *html_entities (char const *raw_text)
 	  }
 
 	  /* Convert some tags into their HTML entities */
-	  out_text = (char *) malloc ((out_length + 1) * sizeof(char));
+	  out_text = (char *)malloc((out_length + 1) * sizeof(char));
 	  out_text[0] = '\0';
 	  for (i = 0; i < raw_length; i++)
 	  {
-	       if (raw_text[i] < 32) {
-		    int c = int(raw_text[i]);
-		    char entity[11];
-		    sprintf(entity, "&amp;#%d;", c);
+	       if (raw_text[i] > 0 && raw_text[i] < 32) {
+		    char entity[10];
+		    sprintf(entity, "&amp;#%d;", int(raw_text[i]));
 		    strcat(out_text, entity);
 	       }
 	       else {
@@ -223,7 +223,7 @@ void process_mlock_modes(std::ofstream &fs, size_t m, const std::string &ircd)
 	if (ircd == "unreal")
 	{
 		if (m &      0x800) fs << "\n\t\t\t\t<mode>ADMINONLY</mode>";       // CMODE_A
-		if (m &     0x1000) fs << "";                 // old CMODE_H (removed in 3.2)
+		if (m &     0x1000) fs << "";                                       // old CMODE_H (removed in 3.2)
 		if (m &    0x40000) fs << "\n\t\t\t\t<mode>NOINVITE</mode>";        // CMODE_f
 		if (m &  0x2000000) fs << "\n\t\t\t\t<mode>NONOTICE</mode>";        // CMODE_T
 		if (m &  0x8000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";       // CMODE_j
@@ -241,8 +241,8 @@ void process_mlock_modes(std::ofstream &fs, size_t m, const std::string &ircd)
 		if (m &  0x2000000) fs << "\n\t\t\t\t<mode>JOINFLOOD</mode>";        // CMODE_j
 		if (m &  0x8000000) fs << "\n\t\t\t\t<mode>BLOCKCAPS</mode>";        // CMODE_B
 		if (m & 0x10000000) fs << "\n\t\t\t\t<mode>NICKFLOOD</mode>";        // CMODE_F
-		if (m & 0x20000000) fs << "";                  // CMODE_g (mode +g <badword>) ... can't be mlocked in older version
-		if (m & 0x40000000) fs << "";                  // CMODE_J (mode +J [seconds] ... can't be mlocked in older versions
+		if (m & 0x20000000) fs << "";                                        // CMODE_g (mode +g <badword>) ... can't be mlocked in older version
+		if (m & 0x40000000) fs << "";                                        // CMODE_J (mode +J [seconds] ... can't be mlocked in older versions
 	} // if (inspircd)
 }
 
@@ -251,8 +251,6 @@ int main(int argc, char *argv[])
 	dbFILE *f;
 	std::ofstream fs;
 	std::string hashm, ircd;
-
-	printf("\n"C_LBLUE"Anope 1.8.x -> 1.9.2+ database converter"C_NONE"\n\n");
 
 	while (hashm != "md5" && hashm != "sha1" && hashm != "oldmd5" && hashm != "plain")
 	{
@@ -451,7 +449,7 @@ int main(int argc, char *argv[])
 		char **access;
 		Memo *memos;
 		int j, len;
-		char cpass[5000]; // if it's ever this long, I will commit suicide
+		char cpass[1000]; // Probably still far too long but hey, it's < 1KB
 
 		for (nc = nclists[i]; nc; nc = nc->next)
 		{
