@@ -1,4 +1,7 @@
 /*
+*
+*   Anope XML Database Convertor Version 1.0
+*
 *   Copyright (C) 2003-2010 Anope Team <team@anope.org>
 *   Copyright (C) 2005-2006 Florian Schulze <certus@anope.org>
 *   Copyright (C) 2008-2010 Robin Burchell <w00t@inspircd.org>
