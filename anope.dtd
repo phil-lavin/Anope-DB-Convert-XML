@@ -1,0 +1,103 @@
+<!ELEMENT anope (nickcores, bots, channels, stats, akills, sglines, sqlines, szlines)>
+<!ATTLIST anope version CDATA #REQUIRED>
+<!ELEMENT nickcores (nickcore*)>
+<!ELEMENT nickcore (display, uuid, password, email?, greet?, icq?, url?, accesslist?, flags?, memos?, aliases)>
+<!ATTLIST password hashtype CDATA #REQUIRED>
+<!ELEMENT display (#PCDATA)>
+<!ELEMENT uuid (#PCDATA)>
+<!ELEMENT password (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT greet (#PCDATA)>
+<!ELEMENT icq (#PCDATA)>
+<!ELEMENT url (#PCDATA)>
+<!ELEMENT accesslist (access+)>
+<!ELEMENT access (#PCDATA)>
+<!ELEMENT flags (flag+)>
+<!ELEMENT flag (#PCDATA)>
+<!ELEMENT memos (memo+)>
+<!ELEMENT memo (time, sender, flags?, body)>
+<!ATTLIST memo number CDATA #REQUIRED>
+<!ELEMENT time (#PCDATA)>
+<!ELEMENT sender (#PCDATA)>
+<!ELEMENT body (#PCDATA)>
+<!ELEMENT aliases (alias+)>
+<!ELEMENT alias (nick, regtime, seentime, lastmask?, lastrealname?, lastquit?, flags?, virtualhost?)>
+<!ELEMENT nick (#PCDATA)>
+<!ELEMENT regtime (#PCDATA)>
+<!ELEMENT seentime (#PCDATA)>
+<!ELEMENT lastmask (#PCDATA)>
+<!ELEMENT lastrealname (#PCDATA)>
+<!ELEMENT lastquit (#PCDATA)>
+<!ELEMENT virtualhost (creator, time, vhost, vident?)>
+<!ELEMENT creator (#PCDATA)>
+<!ELEMENT vhost (#PCDATA)>
+<!ELEMENT vident (#PCDATA)>
+<!ELEMENT bots (bot*)>
+<!ELEMENT bot (nick, user, host, created, chancount, realname, flags?)>
+<!ELEMENT user (#PCDATA)>
+<!ELEMENT host (#PCDATA)>
+<!ELEMENT created (#PCDATA)>
+<!ELEMENT chancount (#PCDATA)>
+<!ELEMENT realname (#PCDATA)>
+<!ELEMENT channels (channel*)>
+<!ELEMENT channel (name, timeregistered, lastused, bantype, memomax, founder?, successor?, levels, flags?, description?, url?, email?, topic?, forbidden?, chanaccesslist, akicklist, mlockon?, mlockoff?, mlocklimit?, mlockkey?, mlockflood?, mlockredirect?, memos?, entrymsg?, botnick?, botflags?, ttbs, capsmin?, capspercent?, floodlines?, floodsecs?, repeattimes?, badwords)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT timeregistered (#PCDATA)>
+<!ELEMENT lastused (#PCDATA)>
+<!ELEMENT bantype (#PCDATA)>
+<!ELEMENT memomax (#PCDATA)>
+<!ELEMENT founder (#PCDATA)>
+<!ELEMENT successor (#PCDATA)>
+<!ELEMENT levels (accesslevel+)>
+<!ELEMENT accesslevel (#PCDATA)>
+<!ATTLIST accesslevel name CDATA #REQUIRED>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT topic (setter, time, body)>
+<!ELEMENT setter (#PCDATA)>
+<!ELEMENT forbidden (by, reason)>
+<!ELEMENT by (#PCDATA)>
+<!ELEMENT reason (#PCDATA)>
+<!ELEMENT chanaccesslist (chanaccess*)>
+<!ELEMENT chanaccess (display, level, seen)>
+<!ELEMENT level (#PCDATA)>
+<!ELEMENT seen (#PCDATA)>
+<!ELEMENT akicklist (akick*)>
+<!ELEMENT akick (stuck?, nick?, value, creator, addtime, reason?)>
+<!ELEMENT stuck EMPTY>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT addtime (#PCDATA)>
+<!ELEMENT mlockon (mode+)>
+<!ELEMENT mode (#PCDATA)>
+<!ELEMENT mlockoff (mode+)>
+<!ELEMENT mlocklimit (#PCDATA)>
+<!ELEMENT mlockkey (#PCDATA)>
+<!ELEMENT mlockflood (#PCDATA)>
+<!ELEMENT mlockredirect (#PCDATA)>
+<!ELEMENT entrymsg (#PCDATA)>
+<!ELEMENT botnick (#PCDATA)>
+<!ELEMENT botflags (flag+)>
+<!ELEMENT ttbs (ttb+)>
+<!ELEMENT ttb (#PCDATA)>
+<!ATTLIST ttb type CDATA #REQUIRED>
+<!ELEMENT capsmin (#PCDATA)>
+<!ELEMENT capspercent (#PCDATA)>
+<!ELEMENT floodlines (#PCDATA)>
+<!ELEMENT floodsecs (#PCDATA)>
+<!ELEMENT repeattimes (#PCDATA)>
+<!ELEMENT badwords (badword*)>
+<!ELEMENT badword (#PCDATA)>
+<!ATTLIST badword type CDATA #REQUIRED>
+<!ELEMENT stats (maxusercount, maxusertime)>
+<!ELEMENT maxusercount (#PCDATA)>
+<!ELEMENT maxusertime (#PCDATA)>
+<!ELEMENT akills (akill*)>
+<!ELEMENT akill (user, host, by, seton, expires, reason)>
+<!ELEMENT seton (#PCDATA)>
+<!ELEMENT expires (#PCDATA)>
+<!ELEMENT sglines (sgline*)>
+<!ELEMENT sgline (mask, by, seton, expires, reason)>
+<!ELEMENT sqlines (sqline*)>
+<!ELEMENT sqline (mask, by, seton, expires, reason)>
+<!ELEMENT szlines (szline*)>
+<!ELEMENT szline (mask, by, seton, expires, reason)>
+<!ELEMENT mask (#PCDATA)>

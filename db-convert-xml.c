@@ -334,7 +334,7 @@ int main(int argc, char *argv[]) {
 
 	// Start File
 	fs << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" << std::endl;
-	fs << "<!DOCTYPE anope SYSTEM \"http://www.geekshed.net/xml/anope.dtd\">" << std::endl;
+	fs << "<!DOCTYPE anope SYSTEM \"http://www.geekshed.net/xml/geekshed/anope.dtd\">" << std::endl;
 	// VERSHUN ONE
 	fs << "<anope version=\"1\">" << std::endl;
 
