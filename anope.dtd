@@ -1,5 +1,6 @@
 <!ELEMENT anope (nickcores, bots, channels, stats, akills, sglines, sqlines, szlines)>
 <!ATTLIST anope version CDATA #REQUIRED>
+<!ATTLIST anope gentime CDATA #REQUIRED>
 <!ELEMENT nickcores (nickcore*)>
 <!ELEMENT nickcore (display, uuid, password, email?, greet?, icq?, url?, accesslist?, flags?, memos?, aliases)>
 <!ATTLIST password hashtype CDATA #REQUIRED>

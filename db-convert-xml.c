@@ -22,6 +22,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define NI_SERVICES_OPER        0x00001000  /* User is a Services operator */
 #define NI_SERVICES_ADMIN       0x00002000  /* User is a Services admin */
@@ -302,6 +303,7 @@ int main(int argc, char *argv[]) {
 	char *uuid;
 	int uuidlen = 0;
 	NickCore *uuidnc;
+	time_t now = time(NULL);
 
 	while (hashm != "md5" && hashm != "sha1" && hashm != "oldmd5" && hashm != "plain") {
 		if (!hashm.empty())
@@ -336,7 +338,7 @@ int main(int argc, char *argv[]) {
 	fs << "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>" << std::endl;
 	fs << "<!DOCTYPE anope SYSTEM \"http://www.geekshed.net/xml/geekshed/anope.dtd\">" << std::endl;
 	// VERSHUN ONE
-	fs << "<anope version=\"1\">" << std::endl;
+	fs << "<anope version=\"1\" gentime=\"" << now << "\">" << std::endl;
 
 	/* Section I: Nicks */
 	/* Ia: First database */
