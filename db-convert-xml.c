@@ -479,7 +479,7 @@ int main(int argc, char *argv[]) {
 
 					if (strcmp(uuidnick, "*") != 0) {
 						uuidnc = findcore(uuidnick, 0);
-						if (uuidnc) {							
+						if (uuidnc) {
 							//moduleAddData(&uuidnc->moduleData, "uuid", uuid);
 							//printf("%s -> %s", uuidnc->display, uuid);
 							uuidnc->uuid = strdup(uuid);
@@ -561,7 +561,7 @@ int main(int argc, char *argv[]) {
 			if (nc->url)
 			fs << "\t\t\t<url>" << html_entities(nc->url) << "</url>" << std::endl;
 			if (nc->language)
-			fs << "\t\t\t<language>" << html_entities(nc->language) << "</language>" << std::endl;
+			fs << "\t\t\t<language>" << nc->language << "</language>" << std::endl;
 
 			if (nc->accesscount) {
 				fs << "\t\t\t<accesslist>" << std::endl;
