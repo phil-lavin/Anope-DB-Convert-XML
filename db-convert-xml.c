@@ -83,7 +83,7 @@ static char *html_entities (char const *raw_text) {
 	int out_length;
 	char new_char[2];
 	int i;
-	
+
 	if (out_text != NULL) {
 		free(out_text);
 	}
@@ -560,6 +560,8 @@ int main(int argc, char *argv[]) {
 			fs << "\t\t\t<icq>" << nc->icq << "</icq>" << std::endl;
 			if (nc->url)
 			fs << "\t\t\t<url>" << html_entities(nc->url) << "</url>" << std::endl;
+			if (nc->language)
+			fs << "\t\t\t<language>" << html_entities(nc->language) << "</language>" << std::endl;
 
 			if (nc->accesscount) {
 				fs << "\t\t\t<accesslist>" << std::endl;
@@ -1256,11 +1258,11 @@ int main(int argc, char *argv[]) {
 
 	/* CONVERTING DONE \o/ HURRAY! */
 	fs.close();
-	
+
 	if (out_text != NULL) {
 		free(out_text);
 	}
-	
+
 	return 0;
 } /* End of main() */
 
